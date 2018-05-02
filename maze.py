@@ -77,6 +77,7 @@ class Maze:
                         neighbors.append((new_cell, i))
                 # if state is solve and no wall between cell and new cell
                 if self.state == 'solve':
+                    print("solving")
                     if (self.maze_array[new_cell] & WALLS[i]):
                         # if new cell not on solution or backtrack path
                         if not (self.maze_array[new_cell] & (BACKTRACK_BITS | SOLUTION_BITS)):
