@@ -62,23 +62,24 @@ class Maze:
         x, y = self.x_y(cell)
         neighbors = []
         # for each direction
-        for i in range(4):
+        for i in range(0, 4):
             # calculate new cell from cell
             new_x = x + COMPASS[i][0]
             new_y = y + COMPASS[i][1]
+            new_cell = self.cell_index(new_x, new_y)
             # if new cell in that direction is within the bounds of maze
             if self.cell_in_bounds(new_x, new_y):
-                new_cell = self.cell_index(new_x, new_y)
                 # if state is create and all of new cell's walls are up
+                print("THis is the current state {}".format(self.state))
                 if self.state == 'create':
                     if not (self.maze_array[new_cell] & WALL_BITS):
                         # add (new cell index, COMPASS index of direction) to neighbors
                         print("THis is the maze cell: {}".format(self.maze_array[new_cell]))
                         neighbors.append((new_cell, i))
                 # if state is solve and no wall between cell and new cell
-                if self.state == 'solve':
+                elif self.state == 'solve':
                     print("solving")
-                    if (self.maze_array[new_cell] & WALLS[i]):
+                    if (self.maze_array[cell] & WALLS[i]):
                         # if new cell not on solution or backtrack path
                         if not (self.maze_array[new_cell] & (BACKTRACK_BITS | SOLUTION_BITS)):
                             # add (new cell index, COMPASS index of direction) to neighbors
@@ -124,10 +125,10 @@ class Maze:
 
     # Reconstruct path to start using backtrack bits
     def reconstruct_solution(self, cell):
-        self.draw_visited_cell(cell)
         # TODO: Logic for reconstructing solution path in BFS
         self.draw_visited_cell(cell)
         prev_cell_bits = (self.maze_array[cell] & BACKTRACK_BITS) >> 12
+        print(prev_cell_bits)
         try:
             i = WALLS.index(prev_cell_bits)
         except ValueError:
