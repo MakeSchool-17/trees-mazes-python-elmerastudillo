@@ -128,19 +128,19 @@ class Maze:
         # TODO: Logic for reconstructing solution path in BFS
         self.draw_visited_cell(cell)
         prev_cell_bits = (self.maze_array[cell] & BACKTRACK_BITS) >> 12
-        print(prev_cell_bits)
         try:
             i = WALLS.index(prev_cell_bits)
         except ValueError:
             print('ERROR - BACKTRACK BITS INVALID!')
         x, y = self.x_y(cell)
-        prev_x = COMPASS[i][0]
-        prev_y = COMPASS[i][1]
+        prev_x = x + COMPASS[i][0]
+        prev_y = y + COMPASS[i][1]
         prev_cell = self.cell_index(prev_x, prev_y)
-        self.maze_array[prev_cell] |= (OPPOSITE_WALLS[i] << 8) 
+        self.maze_array[prev_cell] |= (OPPOSITE_WALLS[i] << 8)
         self.refresh_maze_view()
         if prev_cell != 0:
             self.reconstruct_solution(prev_cell)
+
 
     # Check if x, y values of cell are within bounds of maze
     def cell_in_bounds(self, x, y):

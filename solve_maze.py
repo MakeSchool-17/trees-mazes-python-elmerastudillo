@@ -43,11 +43,9 @@ def solve_bfs(m):
         m.bfs_visit_cell(current_cell, in_direction)
         visited_cells += 1
         m.refresh_maze_view()
-
         unvisited_neighbors = m.cell_neighbors(current_cell)
         for neighbor in unvisited_neighbors:
             queue.insert(0, neighbor)
-    # m.draw_bfs_visited_cell(current_cell)
     m.reconstruct_solution(current_cell)
     m.state = 'idle'
 
